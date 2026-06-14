@@ -1,0 +1,6 @@
+
+Resolution as 1000*1000
+
+
+Pastoral - Zebu
+("Beef_density_subs_h_km2@1")*(("Hybrid_AEZs@1"=1)*(0.85)*(1-0.6)+("Hybrid_AEZs@1"=2)*(0.7)*(1-0.6))
