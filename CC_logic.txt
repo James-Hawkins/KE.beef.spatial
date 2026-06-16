@@ -1,0 +1,211 @@
+y The Net Primary Production data are publicly avail-
+able from https:// doi. org/https:// doi. org/ 10. 5067/ MODIS/ MOD17
+A3HGF. 061. The climate data are publicly available from https:// esgf-
+data. dkrz. de/ proje cts/ esgf- dkrz
+
+
+# https://www.earthdata.nasa.gov/data/catalog/lpcloud-mod17a3hgf-006#variables
+
+
+# Max omit value 
+-99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+
+
+48 , 37 , 25 , 22 
+
+# North west
+
+gdal_translate HDF4_EOS:EOS_GRID:"C:\Users\hawkj\Documents\Github\Gatsby\Spatial\CMIP_projs\MODIS\RAW/MOD17A3HGF.A2024001.h21v08.061.2025011053848.hdf":MOD_Grid_MOD17A3H:Npp_500m C:\Users\hawkj\Documents\Github\Gatsby\Spatial\CMIP_projs\MODIS\MODIS_NW_NPP.tif
+
+
+# North east
+gdal_info MOD17A3HGF.A2022001.h22v08.061.2023035051837.hdf
+
+
+gdal_translate HDF4_EOS:EOS_GRID:"C:\Users\hawkj\Documents\Github\Gatsby\Spatial\CMIP_projs\MODIS\RAW/MOD17A3HGF.A2022001.h22v08.061.2023035051837.hdf":MOD_Grid_MOD17A3H:Npp_500m C:\Users\hawkj\Documents\Github\Gatsby\Spatial\CMIP_projs\MODIS\MODIS_NE_NPP.tif
+
+
+# South West
+gdal_info MOD17A3HGF.A2021001.h21v09.061.2022020140325.hdf 
+
+
+gdal_translate HDF4_EOS:EOS_GRID:"C:\Users\hawkj\Documents\Github\Gatsby\Spatial\CMIP_projs\MODIS\RAW/MOD17A3HGF.A2021001.h21v09.061.2022020140325.hdf":MOD_Grid_MOD17A3H:Npp_500m C:\Users\hawkj\Documents\Github\Gatsby\Spatial\CMIP_projs\MODIS\MODIS_SW_NPP.tif
+
+
+# South EAST
+gdal_info MOD17A3HGF.A2021001.h22v09.061.2022020142222.hdf
+
+
+gdal_translate HDF4_EOS:EOS_GRID:"C:\Users\hawkj\Documents\Github\Gatsby\Spatial\CMIP_projs\MODIS\RAW/MOD17A3HGF.A2021001.h22v09.061.2022020142222.hdf":MOD_Grid_MOD17A3H:Npp_500m C:\Users\hawkj\Documents\Github\Gatsby\Spatial\CMIP_projs\MODIS\MODIS_SE_NPP.tif
+
+## 2020 data
+gdalinfo MOD17A3HGF.A2020001.h21v08.061.2021015033248.hdf
+
+gdal_translate HDF4_EOS:EOS_GRID:"C:\Users\hawkj\Documents\Github\Gatsby\Spatial\CMIP_projs\MODIS\MOD17A3HGF.A2020001.h21v08.061.2021015033248.hdf":MOD_Grid_MOD17A3H:Npp_500m C:\Users\hawkj\Documents\Github\Gatsby\Spatial\CMIP_projs\MODIS\MODIS_2020_1.tif
+
+
+gdal_translate HDF4_EOS:EOS_GRID:"C:\Users\hawkj\Documents\Github\Gatsby\Spatial\CMIP_projs\MODIS\MOD17A3HGF.A2020001.h21v09.061.2021015033250.hdf":MOD_Grid_MOD17A3H:Npp_500m C:\Users\hawkj\Documents\Github\Gatsby\Spatial\CMIP_projs\MODIS\MODIS_2020_2.tif
+
+
+gdal_translate HDF4_EOS:EOS_GRID:"C:\Users\hawkj\Documents\Github\Gatsby\Spatial\CMIP_projs\MODIS\MOD17A3HGF.A2020001.h22v08.061.2021015033241.hdf":MOD_Grid_MOD17A3H:Npp_500m C:\Users\hawkj\Documents\Github\Gatsby\Spatial\CMIP_projs\MODIS\MODIS_2020_3.tif
+
+
+gdal_translate HDF4_EOS:EOS_GRID:"C:\Users\hawkj\Documents\Github\Gatsby\Spatial\CMIP_projs\MODIS\MOD17A3HGF.A2020001.h22v09.061.2021015033213.hdf":MOD_Grid_MOD17A3H:Npp_500m C:\Users\hawkj\Documents\Github\Gatsby\Spatial\CMIP_projs\MODIS\MODIS_2020_4.tif
+
+
+
+# LAND CLASSIFICATION -- LPS AND SCRUBLAND
+
+# IS LGA AND SCRUBLAND
+("Raster_LGA@1"=1) AND ("LGA_and_Scrubl_raster@1"=1)
+
+
+# LCC
+
+
+# BIOMASS DEMAND
+
+# Projected animal populations
+(g1+ g1 * 0.078 * 30) * (g1>0)
+
+
+# Total biomass (kg/sq km2)
+
+# Population x TLU units per head x TLU weight x intake (frac BW) x 365 days /yr
+
+
+# Dairy animal biomass consumption (MG/HA)
+
+
+"DAIRY_BIOM_DM_kg_sq_km_yr@1" = g1  * (200/250) * 250 * 0.025 * 365 * (1/1000) /100
+
+
+
+"BEEF_BIOM_DM_kg_sq_km_yr@1" = g1 * (167/250) * 250 *  0.025 * 365  * (1/1000) /100
+
+
+0.67 * ( "Beef_pd_h_km2@1"  * (167/250)  + "Dairy_pd_h_km2@1"  * (167/250)   ) * 250*  0.025 * 365  * (1/1000) /100
+
+
+# Formula for getting 2014 popn from 2020 and gr
+x_1 = x_0 + x_0 * (gr) * 7
+x_1 = x_0 (1 + gr * 7)
+x_0 = x_1 /  (1 + gr * 7) = "Beef_pd_h_km2@1" / (1 + 0.078 * 7 )
+
+
+# LCC
+"MODIS_NPP_RAST@1" * 1000000 * 2 * 0.25 /  ( "BEEF_BIOM_DM_kg_sq_km_yr@1" + "DAIRY_BIOM_DM_kg_sq_km_yr@1" )
+
+# 2050 NPP
+# LGA 2
+# LGH 3
+# LGT 4 
+# MRA 6
+# MRH 7 
+# MRT 8 
+
+
+# NOTE: this must all be entered on one line (no line breaks over brackets)
+
+
+"MODIS_NPP_RAST@1" * ("clipped_LPS@1" = 2) * 1.08    # LGA
+"MODIS_NPP_RAST@1" * ("clipped_LPS@1" = 3) * 0.5    # LGH
+"MODIS_NPP_RAST@1" * ("clipped_LPS@1" = 4) * 0.83    # LGT
+
+
+"MODIS_NPP_RAST@1" * ("clipped_LPS@1" = 6) * 1.15    # MRA
+"MODIS_NPP_RAST@1" * ("clipped_LPS@1" = 7) * .96    # MRH
+"MODIS_NPP_RAST@1" * ("clipped_LPS@1" = 8) * .91    # MRT
+
+# 2050 - RCP 4.5
+(
+( "MODIS_NPP_RAST_2014_LR@1" * ( "clipped_LPS@1" = 2) * 1.08 ) + 
+( "MODIS_NPP_RAST_2014_LR@1" * ( "clipped_LPS@1" = 3) * 0.5 ) +
+( "MODIS_NPP_RAST_2014_LR@1" * ( "clipped_LPS@1" = 4) * 0.83 )+
+( "MODIS_NPP_RAST_2014_LR@1" * ( "clipped_LPS@1" = 6) * 0.91 ) +
+( "MODIS_NPP_RAST_2014_LR@1" * ( "clipped_LPS@1" = 7) * 0.96 )+
+( "MODIS_NPP_RAST_2014_LR@1" * ( "clipped_LPS@1" = 8) * 0.86 )
+)
+
+
+
+# 2050 - RCP 8.5
+(
+( "MODIS_NPP_RAST_2014_LR@1" * ( "clipped_LPS@1" = 2) * 1.12 ) + 
+( "MODIS_NPP_RAST_2014_LR@1" * ( "clipped_LPS@1" = 3) * 0.75 ) +
+( "MODIS_NPP_RAST_2014_LR@1" * ( "clipped_LPS@1" = 4) * 0.75 )+
+( "MODIS_NPP_RAST_2014_LR@1" * ( "clipped_LPS@1" = 6) * 0.87 ) +
+( "MODIS_NPP_RAST_2014_LR@1" * ( "clipped_LPS@1" = 7) * 0.88 )+
+( "MODIS_NPP_RAST_2014_LR@1" * ( "clipped_LPS@1" = 8) * 0.82 )
+)
+
+
+
+
+# Specifically for grasslands and LGA
+ ("Raster_is_LGA_and_Scrubl@1" =1)*1 * ("MODIS_NPP_RAST@1" * 1000000 * (1/0.47) * 0.85 * 0.9 /  ( "BEEF_BIOM_DM_kg_sq_km_yr@1" + "DAIRY_BIOM_DM_kg_sq_km_yr@1" ))
+ 
+ 
+ 
+("NPP_2050_SCRUBLAND_ONLY@1" * 1000000 * (1/0.47) * 0.442 * 0.9 * 0.3 /  ( "BEEF_BIOM_DM_2050_kg_sq_km_yr@1" + "DAIRY_BIOM_DM_2050_kg_sq_km_yr@1" ))
+
+
+
+
+# NPP GRASS ONLY
+# "NPP_2050@1"*"2020_LC_is_scrubland@1"*    1000000 * (1/0.47) * 0.442 * 0.3 
+
+"MODIS_NPP_RAST_2014_LR@1"* ( 1 = "2020_LC_is_grassland@1"     ) * (1000000 * (1/0.47) * 0.442 * 0.3 )
+
+
+# SHRUB ONLY
+"MODIS_NPP_RAST_2014_LR@1"*  ( 1 = "2020_LC_is_shrubland@1" ) * (1000000 * (1/0.47) * 0.442 * 0.3 *   0.4 )
+
+
+# NPP CROP ONLY - assume 34% as grass or savannah cover
+
+"NPP_2050@1"* ( "2020_LC_is_cropland@1" = 1 ) * 1000000 *  (1/0.47) * (.34  * 0.442 *  0.3  + (1-0.34) * 0.45 * 0.6  * 0.5 ) + 0
+
+# ALL CATEGORIES
+
+
+* 10000 * (1/1000) * (1/0.47) * 
+( 
+( 1 = "2020_LC_is_cropland@1" )  * (.34  * 0.442 *  0.3  + (1-0.34) * 0.45 * 0.6  * 0.5 ) 
++
+ ( 1 = "2020_LC_is_shrubland@1" ) * (0.442 * 0.3 *   0.15 )
++
+( 1 = "2020_LC_is_grassland@1"     ) * ( 0.442 * 0.3 )
+
+)
+
+
+
+"NPP_2050_RCP4.5@1" * 10000 * (1/1000) * (1/0.47) * 
+( 
+( "2020_LC_is_cropland@1" = 1 )  * (.34  * 0.442 *  0.3  + (1-0.34) * 0.45 * 0.6  * 0.5 ) 
++
+ ( 1 = "2020_LC_is_shrubland@1" ) * (0.442 * 0.3 *   0.15 )
++
+( 1 = "2020_LC_is_grassland@1"     ) * ( 0.442 * 0.3 )
+
+)
+
+
+
+
+S/D
+# 2014
+("MODIS_2020_BMS_Total@1" > 0 AND "BM_2020@1" > 0 ) * (   (("MODIS_2020_BMS_Total@1"  / "BM_2020@1" / 1000 ) > 5 ) * 5  +    (("MODIS_2020_BMS_Total@1" / "BM_2020@1"/ 1000 ) <= 5 ) * "MODIS_2020_BMS_Total@1" / ("BM_2020@1"  / 1000)) 
+
+
+# 2050 RCP 4
+("NPP.lr_2050_RCP4_Mg_ha_TOTAL@1" > 0 AND "TOTAL_BIOM_DM_2050_kg_ha_dclip@1" > 0 ) * (   (("NPP.lr_2050_RCP4_Mg_ha_TOTAL@1" / "TOTAL_BIOM_DM_2050_kg_ha_dclip@1" / 1000 ) > 5 ) * 5  +    (("NPP.lr_2050_RCP4_Mg_ha_TOTAL@1" / "TOTAL_BIOM_DM_2050_kg_ha_dclip@1" / 1000 ) <= 5 ) * "NPP.lr_2050_RCP4_Mg_ha_TOTAL@1" / ("TOTAL_BIOM_DM_2050_kg_ha_dclip@1"   / 1000)) 
+
+# 2050 RCP 8
+("NPP.lr_2050_RCP8_Mg_ha_TOTAL@1" > 0 AND "TOTAL_BIOM_DM_2050_kg_ha_dclip@1" > 0 ) * (   (("NPP.lr_2050_RCP8_Mg_ha_TOTAL@1" / "TOTAL_BIOM_DM_2050_kg_ha_dclip@1" / 1000 ) > 5 ) * 5  +    (("NPP.lr_2050_RCP8_Mg_ha_TOTAL@1"/ "TOTAL_BIOM_DM_2050_kg_ha_dclip@1" / 1000 ) <= 5 ) * "NPP.lr_2050_RCP8_Mg_ha_TOTAL@1" / ("TOTAL_BIOM_DM_2050_kg_ha_dclip@1"   / 1000)) 
+
+
+
+# ACTUAL
+("MODIS_2020_BMS_Total@1" > 0 AND "BM_2020@1" > 0 ) * "MODIS_2020_BMS_Total@1" / "BM_2020@1"
