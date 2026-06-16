@@ -1,6 +1,106 @@
 
 Resolution as 1000*1000
 
+Spatial adjustment
+
+1.151833202
+
+
+
+.1x.1 = 0.01 dd sq = 111.32
+pixel size
+0.00008 = 
+
+0.00008/0.01= 0.008 
+0.008*111.32=
+
 
 Pastoral - Zebu
-("Beef_density_subs_h_km2@1")*(("Hybrid_AEZs@1"=1)*(0.85)*(1-0.6)+("Hybrid_AEZs@1"=2)*(0.7)*(1-0.6))
+('Beef_density_subs_adj_h_km2@1')*(('Hybrid_AEZs@1'=1)*(0.7391304)*(1-0.1244)+('Hybrid_AEZs@1'=2)*(0.5348)*(1-0.1244))
+
+Pastoral - Boran
+('Beef_density_subs_adj_h_km2@1')*(('Hybrid_AEZs@1'=1)*(0.7391304)*(0.1244)+('Hybrid_AEZs@1'=2)*(0.5348)*(0.1244))
+
+
+Agropastoral - Zebu
+('Beef_density_subs_adj_h_km2@1')*(('Hybrid_AEZs@1'=1)*(1-0.7391304)*(1-0.0700)+('Hybrid_AEZs@1'=2)*(1-0.5348)*(1-0.07))
+
+Agropastoral - Boran
+('Beef_density_subs_adj_h_km2@1')*(('Hybrid_AEZs@1'=1)*(1-0.7391304)*(0.07)+('Hybrid_AEZs@1'=2)*(1-0.5348)*(0.07))
+
+
+Mixed - Zebu
+('Beef_density_subs_adj_h_km2@1')*(('Hybrid_AEZs@1'=3 OR 'Hybrid_AEZs@1'=4 OR 'Hybrid_AEZs@1'=5)*(0.0567)*(1-0.0800))
+
+Mixed - Boran
+('Beef_density_subs_adj_h_km2@1')*(('Hybrid_AEZs@1'=3 OR 'Hybrid_AEZs@1'=4 OR 'Hybrid_AEZs@1'=5)*(0.0567)*(0.0800))
+
+
+
+
+Finisher - Boran
+('Beef_density_comm_adj_h_km2@1' + 'Beef_density_subs_adj_h_km2@1' )* 0.002 * 0.68
+
+Finisher - Exotic
+('Beef_density_comm_adj_h_km2@1' + 'Beef_density_subs_adj_h_km2@1' )* 0.002 * (1-0.68)
+
+
+Cowcalf - Boran
+
+(('Beef_density_comm_adj_h_km2@1' ) - 'Finisher_Boran@1' - 'Finisher_Exotic@1' ) * 0.82413
+
+
+Cowcalf - Exotic
+(('Beef_density_comm_adj_h_km2@1') - 'Finisher_Boran@1' ) * 0.68
+
+
+
+
+Tally checks
+
+'Pastoral_Boran@1'+'Pastoral_Zebu@1'+'Mixed_Zebu@1'+'Mixed_Boran@1'+'Agpastoral_Boran@1'+'Agpastoral_Zebu@1'
+
+
+
+
+Projections
+
+Pastoral - Zebu
+'Pastoral_Zebu@1' +  'Pastoral_Zebu@1' *0.270*30/100 
+
+
+Pastoral - Boran
+'Pastoral_Boran@1' +  'Pastoral_Boran@1' *0.270*30/100 
+
+Agpastoral - Zebu
+'Agpastoral_Zebu@1' +  'Agpastoral_Zebu@1' *2.536*30/100 
+
+
+Agpastoral - Boran
+'Agpastoral_Boran@1' +  'Agpastoral_Boran@1' *2.536*30/100 
+
+
+Mixed - Zebu
+'Mixed_Zebu@1' +  'Mixed_Zebu@1' *9.375*30/100 
+
+
+Mixed- Boran
+'Mixed_Boran@1' +  'Mixed_Boran@1' *2.536*30/100 
+
+
+Finisher - Boran
+'Finisher_Boran@1' +  'Finisher_Boran@1' *112.964*30/100 
+
+
+Finisher  - Exotic
+'Finisher_Exotic@1' +  'Finisher_Exotic@1' *112.964*30/100 
+
+
+Cowcalf - Boran
+'Cowcalf_Boran@1' +  'Cowcalf_Boran@1' *1.748*30/100 
+
+
+Cowcalf  - Exotic
+'Cowcalf_Exotic@1' +  'Cowcalf_Exotic@1' *1.748*30/100 
+
+
